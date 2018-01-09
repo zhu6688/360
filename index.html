@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=none"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>Document</title>
+	<link rel="stylesheet" href="css/base.css" />
+	<link rel="stylesheet" href="css/swiper.css" />
+	<link rel="stylesheet" href="css/style.css" />
+	
+	<script>
+		/*(function(){
+			var html = document.documentElement;
+			var clientW = document.documentElement.clientWidth;
+			html.style.fontSize = clientW/750*100 +'px';
+		})();*/
+	</script>
+</head>
+
+<body>
+	
+<div class="layout-360">
+	<!-- 引导下载app -->
+	<div class="download-box clearfix">
+		<div class="download-text clearfix">
+			<img src="img/download-logo.png" alt="" />
+			<p>360商城客户端<br /> <span>随时随地 轻松便捷</span></p>
+		</div>
+		<a href="javascript:;" class="downlod-app-btn">打开APP</a>
+		<a href="javascript:;" class="download-close-btn"></a>
+	</div>
+	<div class="search">
+		<input type="text" placeholder="360手机N6 Pro震撼发布"/>
+	</div>
+	<!-- 轮播图 -->
+	<div class="swiper-container banner">
+		<ul class="swiper-wrapper">
+			<li class="swiper-slide"><a href="#"><img data-src="img/banner01.jpg" alt=""  class="swiper-lazy"/><div class="swiper-lazy-preloader"></div></a></li>
+			<li class="swiper-slide"><a href="#"><img data-src="img/banner02.jpg" alt=""  class="swiper-lazy"/><div class="swiper-lazy-preloader"></div></a></li>
+			<li class="swiper-slide"><a href="#"><img data-src="img/banner03.jpg" alt=""  class="swiper-lazy"/><div class="swiper-lazy-preloader"></div></a></li>
+			<li class="swiper-slide"><a href="#"><img data-src="img/banner04.jpg" alt=""  class="swiper-lazy"/><div class="swiper-lazy-preloader"></div></a></li>
+		</ul>
+		
+		<div class="swiper-pag"></div>
+	</div>
+	<!-- 商城头条 -->
+	<div class="shtou">
+		<span class="shtou-left"></span>
+		<div class="shtou-right" id="marqueen">
+			<ul>
+				<li><a href="#">111咚咚智能蓝牙MP3，与人工智能对话 >></a></li>
+				<li><a href="#">222360新品手机全面显而易见>></a></li>
+				<li><a href="#">333360行车记录仪又一力作>></a></li>
+				<li><a href="#">444360新品手机全面显而易见>></a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- 掌上秒杀 -->
+	<div class="seckill">
+		<div class="seckill-top">
+			<h3><span></span>掌上秒杀</h3>
+			<div class="seckill-time">
+				<span class="seckill-special">18点专场</span>
+				<span class="bg-blace">
+					<i>0</i>
+					<i>0</i>
+				</span>
+				
+				<span>:</span>
+				
+				<span class="bg-blace">
+					<i>0</i>
+					<i>0</i>
+				</span>
+				<span>:</span>
+				
+				<span class="bg-blace">
+					<i>0</i>
+					<i>0</i>
+				</span>
+				
+			</div>
+			<a href="javascript:;" class="seckill-link">限时限量 疯狂秒杀&gt;</a>
+		</div>
+	</div>
+	
+</div>	
+
+
+
+<script src="js/zepto.js"></script>
+<script src="js/swiper.js"></script>
+<script src="js/fx.js"></script>
+<script src="js/selector.js"></script>
+<script>
+$(function(){
+	//轮播图
+	new Swiper('.swiper-container',{
+		pagination: {
+	    	el: '.swiper-pag',
+	    },
+	   /* autoplay: {
+		    delay: 2000,//2.5秒切换一次
+		    disableOnInteraction:false
+		},*/
+		loop:true,
+		effect : 'slide',
+		lazy:true
+	});
+	
+	//商城头条
+	var toutiao = {
+		init:function(){
+			var that = this;
+				this.$marqueen = $('#marqueen');
+				this.marqueen = this.$marqueen.find('ul');
+				this.height = this.marqueen.find('li:eq(0)').height();
+				this.timer = setInterval(function(){
+					that.slide()
+				},3000);
+				this.over();
+		},
+		slide:function(){
+			this.marqueen.animate({'margin-top':-this.height},800,'linear',function(){
+				$(this).css({marginTop : "0px"}).find("li:first").appendTo(this);
+			})
+		},
+		over:function(){
+			var that = this;
+			this.$marqueen.mouseover(function(){
+				clearInterval(that.timer);
+			});
+			this.$marqueen.mouseout(function(){
+				that.timer = setInterval(function(){
+					that.slide()
+				},3000);
+			});
+		}
+	}
+	toutiao.init();
+	
+	
+	
+	//掌上秒杀倒计时
+	var seckill = {
+		init:function(){
+			var time = 600;
+			var i = $('.seckill-time i');
+			var timer = setInterval(function(){
+				time --;
+				var h = Math.floor(time/3600);
+				var m = Math.floor(time%3600/60);
+				var s = Math.floor(time%60);
+				i.eq(0).html(Math.floor(h/10));
+				i.eq(1).html(h%10);
+				i.eq(2).html(Math.floor(m/10));
+				i.eq(3).html(m%10);
+				i.eq(4).html(Math.floor(s/10));
+				i.eq(5).html(s%10);
+				
+				if(time<=0){
+					clearInterval(timer);
+				}
+				
+			},1000)
+			
+		}
+	}
+	seckill.init();
+	
+});
+</script>
+</body>
+</html>
