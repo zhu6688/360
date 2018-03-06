@@ -1,0 +1,80 @@
+1.wamp安装的时候，一定要安装到 主盘符下，不要再创建文件夹，
+否则安装完成的wamp会打不开localhost. 正确的安装路径 【 d/.. 】
+
+2.关于目录路径的相关函数：
+  pathinfo 查看文件信息
+  原址 $file = '/a/s/d/f.jpg'
+  目录 dirname($file) == /a/s/d
+  文件 basename($file) == f.jpg
+  
+3. 当前文件的相对路径： realpath(1.php)
+
+4. php 上传（配置文件中与文件上传的有关选项）
+    file_uploads = on 是否开启文件上传
+    uploads_max_filesize = 2M 限制php处理上传文件大小的最大值，
+                              此值必须小于post_max_size
+    post_max_size = 8M 限制通过post 方法可以接受信息的最大值，
+                      也就是整个post 请求的提交值。此值必须大于uploads_max_filesize
+    upload_tmp_dir = "D:/wamp/tmp"  上传文件存放的临时路径，可以
+                      是绝对路径。默认null则使用系统的临时目录。
+    max_file_uploads = 20  最多上传多少个文件
+      
+    
+--
+mysql -h 192.168.1.120 -u root -p  
+root 账户 只支持本地链接，除非别人给你授权要不然看不了    
+链接本地就用 mysql -u root -p  就可以连接进入，
+\q 退出数据库   \h 查看快捷键 
+
+mysql;  直接进入的数据库，权限低只能看信息。
+
+数据库相关命令   
+========================================  
+命令打错，错误信息都会进入日志，
+    用\c 撤销本次命令，重敲 。
+    引号要成对 出现，否则 退不出去。  
+1.  show databases; (分号必须有)查看当前所有数据库
+2.  create database new; 创建一个名为{ new }的数据库
+3.  删除一个没有的数据库，会报错，
+4.  drop database new; 删除一个数据库 new.
+5.  drop database if exists new; 删除数据库的时候先判断，有就删，没有就得；
+6.  create database if not exists newobj; 若数据库不存在则创建 newobj,
+7.  use newobj; 进入数据库
+8.  select database(); 查看当前所在数据库的位置
+
+数据表的操作；(必须进库里面 操作表)
+========================================
+1.  create table u(id int,name varchar(8),age int);    
+2.  desc obj;   查看表结构
+3.  show tables; 查看所有的数据表
+4.  drop table obj; 删除数据表
+    drop table if exists obj;删除数据表
+数据的增 删 改 查；
+========================================
+增
+1.  insert into obj(id,name,age) values(1,'zhangsan',20);  标准添加 都指定；
+2.  insert into obj values(2,'lisi',21); 按格式，不指定字段添加；
+3.  insert into obj(id,age) values(2,23); 指定部分字段添加
+4.  insert into obj values(3,'zhaowu',24),(4,'qq',34);批量添加
+查
+1.  select * from obj; 查看数据表中的数据
+改
+1.  update obj set age=10 where id=2; 将 id 为2的 age 改为 10；
+2.  update obj set name="zhangwuji",age=30 where id=6; 单条数据多处修改
+3.  update obj set age=age-2 where id>1; 将id号大于1的age都减2，多条数据修改 
+删
+1.  delete from uu where id=4; 删除id为4 的数据   
+2.  delete form uu where id in(20,30,1); 删除id 为20，30，1的数据（没有的不会报错）   
+3.  delete from uu where id>=10 and id<=20;   
+    
+==============================================
+建表语句；
+1.建表的时候 int(4)中的4 值得是显示的宽度，只有存入的数据不是4位的时候，
+会在前面自动补零，其余的不会有效果。  
+2.varchar(8)中的8 指的是超过范围就自动截取。  
+    
+    
+    
+    
+    
+    
